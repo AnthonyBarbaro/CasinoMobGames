@@ -1,0 +1,7 @@
+# Unity YAML merge driver
+*.unity merge=unityyamlmerge eol=lf
+*.prefab merge=unityyamlmerge eol=lf
+*.asset merge=unityyamlmerge eol=lf
+
+# Treat `PackageManagerSettings.asset` as binary to prevent merge conflicts
+ProjectSettings/PackageManagerSettings.asset merge=binary
