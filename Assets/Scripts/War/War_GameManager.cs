@@ -2,11 +2,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
+using System.Diagnostics;
 
 namespace war
 {
     public class GameManager : MonoBehaviour
     {
+        //Audio 
+        private AudioSource audioSource;
+        public AudioClip moneyClip;
+        public AudioClip cardDealClip;
         // Game Buttons
         public Button dealBtn;
         public Button standBtn;
@@ -39,6 +45,17 @@ namespace war
 
         void Start()
         {
+            // Ensure the GameObject has an AudioSource component
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            if (moneyClip == null)
+                UnityEngine.Debug.LogWarning("Money clip is not assigned.");
+            if (cardDealClip == null)
+                UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
             // Initialize buttons
             standBtn.gameObject.SetActive(false);
             betBtn5.gameObject.SetActive(true);
@@ -66,7 +83,21 @@ namespace war
             restartGameBtn.onClick.AddListener(() => RestartGame());
             clearBetBtn.onClick.AddListener(() => ClearBet());
         }
+        private void PlayMoneySound()
+        {
+            if (moneyClip != null)
+            {
+                audioSource.PlayOneShot(moneyClip);
+            }
+        }
 
+        private void PlayCardDealSound()
+        {
+            if (cardDealClip != null)
+            {
+                audioSource.PlayOneShot(cardDealClip);
+            }
+        }
         private void Back()
         {
             SceneManager.LoadScene("MenuScene");
@@ -111,9 +142,11 @@ namespace war
 
             // Deal cards with delay
             playerScript.StartHand();
+            PlayCardDealSound();
             yield return new WaitForSeconds(0.5f);
 
             dealerScript.StartHand();
+            PlayCardDealSound();
             yield return new WaitForSeconds(0.5f);
 
             // Update the scores displayed
@@ -172,6 +205,7 @@ namespace war
             {
                 mainText.text = "You Win!";
                 playerScript.AdjustMoney(currentBet * 2); // Payout is 1:1 (original bet + winnings)
+                PlayMoneySound();
             }
             else if (playerScript.handValue < dealerScript.handValue)
             {
@@ -259,6 +293,7 @@ namespace war
 
             if (playerScript.GetMoney() >= value)
             {
+                PlayMoneySound();
                 currentBet += value;
                 playerScript.AdjustMoney(-value);
                 betsText.text = "Bet: $" + currentBet.ToString();
@@ -281,7 +316,7 @@ namespace war
                 mainText.gameObject.SetActive(true);
                 return;
             }
-
+            PlayMoneySound();
             playerScript.AdjustMoney(currentBet);
             currentBet = 0;
             betsText.text = "Bet: $0";

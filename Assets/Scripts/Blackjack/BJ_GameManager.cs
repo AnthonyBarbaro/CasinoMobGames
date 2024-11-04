@@ -8,6 +8,10 @@ namespace blackjack
 {
     public class GameManager : MonoBehaviour
     {
+        //Audio 
+        private AudioSource audioSource;
+        public AudioClip moneyClip;
+        public AudioClip cardDealClip;
         // Game Buttons
         public Button dealBtn;
         public Button hitBtn;
@@ -18,7 +22,7 @@ namespace blackjack
         public Button betBtn500;
         public Button backBtn;
         public Button restartGameBtn;
-
+        public Button clearBetBtn;
         // Access the player and dealer's script
         public PlayerScript playerScript;
         public PlayerScript dealerScript;
@@ -46,6 +50,17 @@ namespace blackjack
 
         private void InitializeGame()
         {
+            // Ensure the GameObject has an AudioSource component
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            if (moneyClip == null)
+                UnityEngine.Debug.LogWarning("Money clip is not assigned.");
+            if (cardDealClip == null)
+                UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
             dealBtn.gameObject.SetActive(true);
             standBtn.gameObject.SetActive(false);
             hitBtn.gameObject.SetActive(false);
@@ -54,7 +69,7 @@ namespace blackjack
             betBtn100.gameObject.SetActive(true);
             betBtn500.gameObject.SetActive(true);
             restartGameBtn.gameObject.SetActive(false);
-
+            clearBetBtn.gameObject.SetActive(false);
             // Initialize UI texts
             betsText.text = "Bet: $0";
             cashText.text = "$" + playerScript.GetMoney().ToString();
@@ -72,8 +87,23 @@ namespace blackjack
             betBtn500.onClick.AddListener(() => BetClicked(500));
             backBtn.onClick.AddListener(() => Back());
             restartGameBtn.onClick.AddListener(() => RestartGame());
+            clearBetBtn.onClick.AddListener(() => ClearBet());
+        }
+        private void PlayMoneySound()
+        {
+            if (moneyClip != null)
+            {
+                audioSource.PlayOneShot(moneyClip);
+            }
         }
 
+        private void PlayCardDealSound()
+        {
+            if (cardDealClip != null)
+            {
+                audioSource.PlayOneShot(cardDealClip);
+            }
+        }
         private void Back()
         {
             SceneManager.LoadScene("MenuScene");
@@ -102,6 +132,7 @@ namespace blackjack
             betBtn20.gameObject.SetActive(false);
             betBtn100.gameObject.SetActive(false);
             betBtn500.gameObject.SetActive(false);
+            clearBetBtn.gameObject.SetActive(false);
 
             // Reset round, hide text, prep for new hand
             playerScript.ResetHand();
@@ -122,20 +153,24 @@ namespace blackjack
 
             // Deal initial cards with delay
             // Player Card 1
+            PlayCardDealSound();
             playerScript.GetCard();
             scoreText.text = "Hand: " + playerScript.handValue.ToString();
             yield return new WaitForSeconds(0.5f);
 
             // Dealer Card 1
+            PlayCardDealSound();
             dealerScript.GetCard();
             yield return new WaitForSeconds(0.5f);
 
             // Player Card 2
+            PlayCardDealSound();
             playerScript.GetCard();
             scoreText.text = "Hand: " + playerScript.handValue.ToString();
             yield return new WaitForSeconds(0.5f);
 
             // Dealer Card 2 (hidden)
+            PlayCardDealSound();
             dealerScript.GetCard();
 
             // Check for immediate blackjack
@@ -163,6 +198,7 @@ namespace blackjack
             // Check that there is still room on the table
             if (playerScript.cardIndex <= 10)
             {
+                PlayCardDealSound();
                 playerScript.GetCard();
                 scoreText.text = "Hand: " + playerScript.handValue.ToString();
                 yield return new WaitForSeconds(0.5f);
@@ -187,13 +223,16 @@ namespace blackjack
             hideCard.GetComponent<Renderer>().enabled = false;
             dealerScoreText.gameObject.SetActive(true);
             dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
-            yield return new WaitForSeconds(0.5f);
+            PlayCardDealSound();
+            yield return new WaitForSeconds(0.7f);
 
             while (dealerScript.handValue < 17 && dealerScript.cardIndex < 10)
             {
+                PlayCardDealSound();
                 dealerScript.GetCard();
                 dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
                 yield return new WaitForSeconds(0.5f);
+
             }
 
             RoundOver();
@@ -219,6 +258,7 @@ namespace blackjack
             else if (player21 && !dealer21)
             {
                 mainText.text = "Blackjack! You win!";
+                PlayMoneySound();
                 playerScript.AdjustMoney((int)(currentBet * 2.5f)); // Payout 3:2
             }
             else if (dealer21 && !player21)
@@ -239,11 +279,13 @@ namespace blackjack
             else if (playerScript.handValue > dealerScript.handValue)
             {
                 mainText.text = "You win!";
+                PlayMoneySound();
                 playerScript.AdjustMoney(currentBet * 2);
             }
             else if (playerScript.handValue == dealerScript.handValue)
             {
                 mainText.text = "Push: Bets returned";
+                PlayMoneySound();
                 playerScript.AdjustMoney(currentBet);
             }
             else
@@ -317,7 +359,21 @@ namespace blackjack
             // Make deal button visible again
             dealBtn.gameObject.SetActive(true);
         }
-
+        void ClearBet()
+        {
+            if (roundInProgress)
+            {
+                mainText.text = "Cannot clear bet during a round.";
+                mainText.gameObject.SetActive(true);
+                return;
+            }
+            PlayMoneySound();
+            playerScript.AdjustMoney(currentBet);
+            currentBet = 0;
+            betsText.text = "Bet: $0";
+            cashText.text = "$" + playerScript.GetMoney().ToString();
+            clearBetBtn.gameObject.SetActive(false);
+        }
         // Set bet amount when bet button is clicked
         void BetClicked(int value)
         {
@@ -332,10 +388,12 @@ namespace blackjack
             // Check if player has enough money to add to the bet
             if (playerScript.GetMoney() >= value)
             {
+                PlayMoneySound();
                 currentBet += value;
                 playerScript.AdjustMoney(-value);
                 betsText.text = "Bet: $" + currentBet.ToString();
                 cashText.text = "$" + playerScript.GetMoney().ToString();
+                clearBetBtn.gameObject.SetActive(true);
             }
             else
             {

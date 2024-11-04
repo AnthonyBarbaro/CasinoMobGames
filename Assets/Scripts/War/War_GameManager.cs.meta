@@ -3,7 +3,27 @@ guid: fa6892c685b1dfc4fb724356dad93f5d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - moneyClip: {instanceID: 0}
+  - cardDealClip: {fileID: 8300000, guid: f417d6fc7e3ba024ea52a4fe42dc5165, type: 3}
+  - dealBtn: {instanceID: 0}
+  - standBtn: {instanceID: 0}
+  - betBtn5: {instanceID: 0}
+  - betBtn20: {instanceID: 0}
+  - betBtn100: {instanceID: 0}
+  - betBtn500: {instanceID: 0}
+  - backBtn: {instanceID: 0}
+  - restartGameBtn: {instanceID: 0}
+  - clearBetBtn: {instanceID: 0}
+  - playerScript: {instanceID: 0}
+  - dealerScript: {instanceID: 0}
+  - scoreText: {instanceID: 0}
+  - dealerScoreText: {instanceID: 0}
+  - betsText: {instanceID: 0}
+  - cashText: {instanceID: 0}
+  - mainText: {instanceID: 0}
+  - hideCard: {instanceID: 0}
+  - hidePlayerCard: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
