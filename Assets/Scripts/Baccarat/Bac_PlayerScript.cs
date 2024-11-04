@@ -32,21 +32,22 @@ namespace baccarat
 
         public void AdjustMoney(int amount)
         {
-            money += amount;
-            if (money < 0)
+            GlobalGameManager.Instance.AdjustPlayerCash(amount);
+            if (GlobalGameManager.Instance.GetPlayerCash() < 0)
             {
-                money = 0;
+                GlobalGameManager.Instance.SetPlayerCash(0); // Set to 0 if cash goes negative
             }
         }
 
+
         public int GetMoney()
         {
-            return money;
+            return GlobalGameManager.Instance.GetPlayerCash();
         }
 
         public void ResetMoney(int amount)
         {
-            money = amount;
+            GlobalGameManager.Instance.SetPlayerCash(amount);
         }
 
         public void ResetHand()

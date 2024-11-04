@@ -277,7 +277,8 @@ namespace baccarat
                 yield return new WaitForSeconds(0.5f);
             }
 
-            // Banker's turn
+            // Recalculate player and dealer values after the player's potential third card
+            playerValue = playerScript.handValue % 10;
             dealerValue = dealerScript.handValue % 10;
 
             bool dealerDraws = false;
@@ -301,7 +302,9 @@ namespace baccarat
             {
                 dealerDraws = true;
             }
+            // Banker stands on 7, 8, or 9.
 
+            // Execute dealer's draw if conditions met
             if (dealerDraws)
             {
                 PlayCardDealSound();
@@ -310,9 +313,10 @@ namespace baccarat
                 dealerScoreText.text = "Banker's hand: " + (dealerScript.handValue % 10).ToString();
                 yield return new WaitForSeconds(0.5f);
             }
-
+            // Final hand values to determine the winner
             int playerFinalValue = playerScript.handValue % 10;
             int bankerFinalValue = dealerScript.handValue % 10;
+
 
             yield return new WaitForSeconds(1f);
 

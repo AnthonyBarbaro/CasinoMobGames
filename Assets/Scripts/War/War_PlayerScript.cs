@@ -40,20 +40,16 @@ namespace war
             return handValue;
         }
 
-        // Add or subtract from money, for bets
+        // Add or subtract from the global cash, for bets
         public void AdjustMoney(int amount)
         {
-            money += amount;
-            if (money < 0)
-            {
-                money = 0;
-            }
+            GlobalGameManager.Instance.AdjustPlayerCash(amount);
         }
 
-        // Output player's current money amount
+        // Output player's current money amount from the global cash system
         public int GetMoney()
         {
-            return money;
+            return GlobalGameManager.Instance.GetPlayerCash();
         }
 
         // Hides all cards, resets the needed variables

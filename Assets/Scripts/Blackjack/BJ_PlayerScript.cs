@@ -70,28 +70,22 @@ namespace blackjack
                 }
             }
         }
-
-        // Add or subtract from money, for bets
+        // Adjust player's cash using the global cash system
         public void AdjustMoney(int amount)
         {
-            money += amount;
-            // Ensure money doesn't go below zero
-            if (money < 0)
-            {
-                money = 0;
-            }
+            GlobalGameManager.Instance.AdjustPlayerCash(amount);
         }
 
-        // Output player's current money amount
+        // Get player's current cash amount from the global cash system
         public int GetMoney()
         {
-            return money;
+            return GlobalGameManager.Instance.GetPlayerCash();
         }
 
-        // Reset player's money (used when restarting the game)
+        // Reset player's cash using the global cash system
         public void ResetMoney()
         {
-            money = 1000;
+            GlobalGameManager.Instance.SetPlayerCash(1000);
         }
 
         // Hides all cards, resets the needed variables

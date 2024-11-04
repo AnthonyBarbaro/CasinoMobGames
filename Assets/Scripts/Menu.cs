@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement; // Make sure this line is included
 using UnityEngine.UI;
 using System.Collections;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace menu
 {
@@ -17,6 +18,9 @@ namespace menu
         public AudioClip buttonClip; // The audio clip to play when a button is clicked
         private AudioSource audioSource; // The audio source to play the clip
 
+        // Global Cash
+        public UnityEngine.UI.Text cashText;
+
         private void Start()
         {
             // Get the AudioSource component
@@ -28,7 +32,11 @@ namespace menu
                 UnityEngine.Debug.LogError("AudioSource component is missing from the GameObject.");
                 return; // Exit if no AudioSource is found
             }
-
+            // Update UI cash display if needed
+            if (cashText != null)
+            {
+                cashText.text = "Cash: $" + GlobalGameManager.Instance.GetPlayerCash();
+            }
             // Add listeners for button clicks
             game1Button.onClick.AddListener(() => PlaySoundAndLoadGame("Baccarat"));
             game2Button.onClick.AddListener(() => PlaySoundAndLoadGame("Blackjack"));
