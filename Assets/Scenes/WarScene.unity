@@ -934,6 +934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moneyClip: {fileID: 8300000, guid: f6613171c76e66541b7a50e52ba4d023, type: 3}
   cardDealClip: {fileID: 8300000, guid: f417d6fc7e3ba024ea52a4fe42dc5165, type: 3}
+  buttonClip: {fileID: 0}
   dealBtn: {fileID: 1293202553}
   standBtn: {fileID: 850593990}
   betBtn5: {fileID: 43260409}
@@ -1616,8 +1617,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0062581, y: -0.0047779}
-  m_SizeDelta: {x: 2021, y: 1130}
+  m_AnchoredPosition: {x: -0.017231, y: -0.00070763}
+  m_SizeDelta: {x: 2021, y: 1174.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &677166664
 MonoBehaviour:
@@ -1875,8 +1876,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: 476.2}
-  m_SizeDelta: {x: 445, y: 80}
+  m_AnchoredPosition: {x: 3.9001, y: 485.25}
+  m_SizeDelta: {x: 371.05, y: 66.705}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &832116529
 MonoBehaviour:
