@@ -14,6 +14,7 @@ namespace baccarat
         private AudioSource audioSource;
         public AudioClip moneyClip;
         public AudioClip cardDealClip;
+        public AudioClip buttonClip;
         // Game Buttons
         public Button dealBtn;
         public Button betBtn5;
@@ -67,7 +68,8 @@ namespace baccarat
             {
                 audioSource = gameObject.AddComponent<AudioSource>();
             }
-
+            if (buttonClip == null)
+                UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
             if (moneyClip == null)
                 UnityEngine.Debug.LogWarning("Money clip is not assigned.");
             if (cardDealClip == null)
@@ -117,7 +119,13 @@ namespace baccarat
                 audioSource.PlayOneShot(moneyClip);
             }
         }
-
+        private void PlayButtonSound()
+        {
+            if (buttonClip != null)
+            {
+                audioSource.PlayOneShot(buttonClip);
+            }
+        }
         private void PlayCardDealSound()
         {
             if (cardDealClip != null)
@@ -127,6 +135,7 @@ namespace baccarat
         }
         private void Back()
         {
+            PlayButtonSound();
             SceneManager.LoadScene("MenuScene");
         }
 
@@ -209,7 +218,7 @@ namespace baccarat
             {
                 yield break;
             }
-
+            PlayButtonSound();
             roundInProgress = true;
             PlayCardDealSound();
             // Deactivate betting buttons

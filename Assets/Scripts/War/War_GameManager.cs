@@ -13,6 +13,7 @@ namespace war
         private AudioSource audioSource;
         public AudioClip moneyClip;
         public AudioClip cardDealClip;
+        public AudioClip buttonClip;
         // Game Buttons
         public Button dealBtn;
         public Button standBtn;
@@ -56,6 +57,8 @@ namespace war
                 UnityEngine.Debug.LogWarning("Money clip is not assigned.");
             if (cardDealClip == null)
                 UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
+            if (buttonClip == null)
+                UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
             // Initialize buttons
             standBtn.gameObject.SetActive(false);
             betBtn5.gameObject.SetActive(true);
@@ -90,6 +93,13 @@ namespace war
                 audioSource.PlayOneShot(moneyClip);
             }
         }
+        private void PlayButtonSound()
+        {
+            if (buttonClip != null)
+            {
+                audioSource.PlayOneShot(buttonClip);
+            }
+        }
 
         private void PlayCardDealSound()
         {
@@ -100,6 +110,7 @@ namespace war
         }
         private void Back()
         {
+            PlayButtonSound();
             SceneManager.LoadScene("MenuScene");
         }
 
@@ -111,7 +122,7 @@ namespace war
                 mainText.gameObject.SetActive(true);
                 return;
             }
-
+            PlayButtonSound();
             StartCoroutine(DealCards());
         }
 
@@ -184,7 +195,7 @@ namespace war
         {
             if (!roundInProgress)
                 return;
-
+            PlayButtonSound();
             StartCoroutine(RoundOver());
         }
 
@@ -258,6 +269,7 @@ namespace war
 
         private void RestartGame()
         {
+            PlayButtonSound();
             playerScript.ResetHand();
             dealerScript.ResetHand();
             playerScript.AdjustMoney(1000 - playerScript.GetMoney()); // Reset money to 1000

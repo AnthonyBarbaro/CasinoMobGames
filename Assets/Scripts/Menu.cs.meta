@@ -3,7 +3,14 @@ guid: fe0292fe582de304ab137e20c32f5847
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - game1Button: {instanceID: 0}
+  - game2Button: {instanceID: 0}
+  - game3Button: {instanceID: 0}
+  - game1ButtonTxt: {instanceID: 0}
+  - game2ButtonTxt: {instanceID: 0}
+  - game3ButtonTxt: {instanceID: 0}
+  - buttonClip: {fileID: 8300000, guid: 306ee0ca4505f744aa3d2a92cc1a0e53, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

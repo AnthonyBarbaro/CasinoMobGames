@@ -12,6 +12,7 @@ namespace blackjack
         private AudioSource audioSource;
         public AudioClip moneyClip;
         public AudioClip cardDealClip;
+        public AudioClip buttonClip;
         // Game Buttons
         public Button dealBtn;
         public Button hitBtn;
@@ -61,6 +62,8 @@ namespace blackjack
                 UnityEngine.Debug.LogWarning("Money clip is not assigned.");
             if (cardDealClip == null)
                 UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
+            if (buttonClip == null)
+                UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
             dealBtn.gameObject.SetActive(true);
             standBtn.gameObject.SetActive(false);
             hitBtn.gameObject.SetActive(false);
@@ -96,6 +99,13 @@ namespace blackjack
                 audioSource.PlayOneShot(moneyClip);
             }
         }
+        private void PlayButtonSound()
+        {
+            if (buttonClip != null)
+            {
+                audioSource.PlayOneShot(buttonClip);
+            }
+        }
 
         private void PlayCardDealSound()
         {
@@ -106,12 +116,14 @@ namespace blackjack
         }
         private void Back()
         {
+            PlayButtonSound();
             SceneManager.LoadScene("MenuScene");
         }
 
 
         private void DealClicked()
         {
+            PlayButtonSound();
             if (currentBet == 0)
             {
                 mainText.text = "Please place a bet before dealing.";
@@ -190,6 +202,7 @@ namespace blackjack
 
         private void HitClicked()
         {
+            PlayButtonSound();
             StartCoroutine(PlayerHit());
         }
 
@@ -212,6 +225,7 @@ namespace blackjack
 
         private void StandClicked()
         {
+            PlayButtonSound();
             hitBtn.gameObject.SetActive(false);
             standBtn.gameObject.SetActive(false);
             StartCoroutine(DealerTurn());
@@ -377,6 +391,7 @@ namespace blackjack
         // Set bet amount when bet button is clicked
         void BetClicked(int value)
         {
+
             if (roundInProgress)
             {
                 // Can't change bet during a round

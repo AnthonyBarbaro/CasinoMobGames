@@ -704,7 +704,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1a6f70c652094804ea113d9f3bab9e2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66c2caaaa1805b04f8962a16d4bafb1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -877,7 +877,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1a6f70c652094804ea113d9f3bab9e2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66c2caaaa1805b04f8962a16d4bafb1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -932,6 +932,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6892c685b1dfc4fb724356dad93f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyClip: {fileID: 8300000, guid: f6613171c76e66541b7a50e52ba4d023, type: 3}
+  cardDealClip: {fileID: 8300000, guid: f417d6fc7e3ba024ea52a4fe42dc5165, type: 3}
   dealBtn: {fileID: 1293202553}
   standBtn: {fileID: 850593990}
   betBtn5: {fileID: 43260409}
@@ -1477,7 +1479,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1a6f70c652094804ea113d9f3bab9e2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66c2caaaa1805b04f8962a16d4bafb1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2703,7 +2705,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1a6f70c652094804ea113d9f3bab9e2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 66c2caaaa1805b04f8962a16d4bafb1d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
