@@ -1252,6 +1252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b2c37b5445754744babc944cee3b6db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyClip: {fileID: 8300000, guid: f6613171c76e66541b7a50e52ba4d023, type: 3}
+  cardDealClip: {fileID: 8300000, guid: f417d6fc7e3ba024ea52a4fe42dc5165, type: 3}
   dealBtn: {fileID: 1293202553}
   betBtn5: {fileID: 43260409}
   betBtn20: {fileID: 750869255}

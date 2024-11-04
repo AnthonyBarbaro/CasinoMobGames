@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Ensure this is included
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
+using System.Diagnostics;
 
 namespace baccarat
 {
     public class GameManager : MonoBehaviour
     {
+        //Audio 
+        private AudioSource audioSource;
+        public AudioClip moneyClip;
+        public AudioClip cardDealClip;
         // Game Buttons
         public Button dealBtn;
         public Button betBtn5;
@@ -54,6 +60,18 @@ namespace baccarat
 
         void Start()
         {
+     
+            // Ensure the GameObject has an AudioSource component
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            if (moneyClip == null)
+                UnityEngine.Debug.LogWarning("Money clip is not assigned.");
+            if (cardDealClip == null)
+                UnityEngine.Debug.LogWarning("Card deal clip is not assigned.");
             // Initialize button visibility and event listeners
             dealBtn.gameObject.SetActive(false);
             betBtn5.gameObject.SetActive(false);
@@ -92,7 +110,21 @@ namespace baccarat
             betsTieText.text = "Bets: $0";
             betsPlayerText.text = "Bets: $0";
         }
+        private void PlayMoneySound()
+        {
+            if (moneyClip != null)
+            {
+                audioSource.PlayOneShot(moneyClip);
+            }
+        }
 
+        private void PlayCardDealSound()
+        {
+            if (cardDealClip != null)
+            {
+                audioSource.PlayOneShot(cardDealClip);
+            }
+        }
         private void Back()
         {
             SceneManager.LoadScene("MenuScene");
@@ -179,7 +211,7 @@ namespace baccarat
             }
 
             roundInProgress = true;
-
+            PlayCardDealSound();
             // Deactivate betting buttons
             betBtn5.gameObject.SetActive(false);
             betBtn20.gameObject.SetActive(false);
@@ -228,7 +260,9 @@ namespace baccarat
             int playerThirdCardValue = -1;
             if (playerValue <= 5)
             {
+                PlayCardDealSound();
                 playerScript.GetCard();
+                
                 playerThirdCardValue = playerScript.hand[playerScript.cardIndex - 1].GetComponent<CardScript>().GetValueOfCard();
                 scoreText.text = "Player's hand: " + (playerScript.handValue % 10).ToString();
                 yield return new WaitForSeconds(0.5f);
@@ -261,7 +295,9 @@ namespace baccarat
 
             if (dealerDraws)
             {
+                PlayCardDealSound();
                 dealerScript.GetCard();
+                
                 dealerScoreText.text = "Banker's hand: " + (dealerScript.handValue % 10).ToString();
                 yield return new WaitForSeconds(0.5f);
             }
@@ -276,11 +312,13 @@ namespace baccarat
             {
                 mainText.text = "Player Wins!";
                 playerScript.AdjustMoney(potPlayer * 2); // Pays 1:1
+               
             }
             else if (playerFinalValue < bankerFinalValue)
             {
                 mainText.text = "Banker Wins!";
                 playerScript.AdjustMoney((int)(potBank * 1.95f)); // Pays 0.95:1 (5% commission)
+                
             }
             else
             {
@@ -289,6 +327,7 @@ namespace baccarat
                 // Return bets on Player and Banker (as per Baccarat rules)
                 playerScript.AdjustMoney(potPlayer);
                 playerScript.AdjustMoney(potBank);
+                
             }
 
             // Reset pots and bets
@@ -303,7 +342,7 @@ namespace baccarat
             roundInProgress = false;
 
             UpdateCashDisplay();
-
+            PlayMoneySound();
             if (playerScript.GetMoney() == 0)
             {
                 GameOver();
@@ -329,6 +368,7 @@ namespace baccarat
         {
             playerScript.ResetMoney(1000);
             UpdateCashDisplay();
+            PlayMoneySound();
             restartGameBtn.gameObject.SetActive(false);
             Reload();
         }
@@ -362,6 +402,7 @@ namespace baccarat
                     betsPlayerText.text = "Bets: $" + potPlayer.ToString();
                 }
                 UpdateCashDisplay();
+                PlayMoneySound();
                 dealBtn.gameObject.SetActive(true);
                 clearBetBtn.gameObject.SetActive(true);
             }
@@ -382,6 +423,7 @@ namespace baccarat
         private void UpdateCashDisplay()
         {
             cashText.text = "$" + playerScript.GetMoney().ToString();
+            
         }
 
         void ClearBet()
@@ -395,12 +437,14 @@ namespace baccarat
             }
 
             playerScript.AdjustMoney(potBank + potTie + potPlayer);
+
             potBank = 0;
             potTie = 0;
             potPlayer = 0;
             betsBankText.text = "Bets: $0";
             betsTieText.text = "Bets: $0";
             betsPlayerText.text = "Bets: $0";
+            PlayMoneySound();
             UpdateCashDisplay();
             clearBetBtn.gameObject.SetActive(false);
             dealBtn.gameObject.SetActive(false);
