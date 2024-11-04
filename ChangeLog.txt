@@ -1,0 +1,88 @@
+# Change Log for CasinoMobGames Project
+Date: 2024-11-03
+
+This document tracks all changes made from October 27 to November 3 in the development of CasinoMobGames. Each entry details the date, description, reason for change, and specific files or scripts affected.
+
+---
+
+## October 27 - October 29, 2024
+
+### 1. Project Initialization and Game Setup
+**Description**: Established the initial project structure and developed basic gameplay and navigation for all three games: Baccarat, Blackjack, and War. Created UI layouts, scenes, and implemented foundational mechanics for each game.
+**Reason**: To create a cohesive project with each game accessible from a central menu.
+**Changes**:
+   - Added scenes: `Baccarat`, `Blackjack`, `WarScene`, and `MenuScene`.
+   - Created main menu with buttons to select each game, linked through `GameMenuController`.
+   - Implemented basic gameplay logic and UI components in `GameManager` for Baccarat, Blackjack, and War.
+
+---
+
+## October 30, 2024
+
+### 2. Added Third-Card Logic for Baccarat
+**Description**: Implemented Baccarat third-card rules for both player and banker.
+**Reason**: Ensured the game adhered to Baccarat rules for accurate gameplay.
+**Changes**:
+   - Updated `GameManager` script in Baccarat to evaluate when third cards are drawn based on player and banker hand values.
+   - Implemented conditions in `RoundOver` method to check values and draw additional cards accordingly.
+
+### 3. Audio Integration for Game Menu
+**Description**: Added sound effects for menu button clicks to enhance user interaction.
+**Reason**: Improved feedback and engagement through sound effects.
+**Changes**:
+   - Added `buttonClip` audio in `GameMenuController`.
+   - Added `AudioSource` component check in `GameMenuController` to avoid null errors.
+   - Played sound effect when buttons are clicked to load different game scenes.
+
+---
+
+## October 31, 2024
+
+### 4. Enhanced Baccarat Betting System
+**Description**: Created betting functionality allowing players to select and place bets on "Banker," "Player," or "Tie."
+**Reason**: To incorporate core Baccarat betting mechanics.
+**Changes**:
+   - `SetBetType` method created in `GameManager` to manage bet selection.
+   - Bet buttons for "Banker," "Player," and "Tie" added to UI and linked to `GameManager`.
+   - Displayed current bets for each type and allowed players to clear or adjust bets before the round starts.
+
+---
+
+## November 3, 2024 (Planned)
+
+### 5. Persistent Cash Stack Setup (Global Cash System)
+**Description**: Developing a global cash system to maintain player cash across all scenes.
+**Reason**: To provide a seamless experience for players with consistent cash totals in different games.
+**Changes** (planned):
+   - Create `GlobalGameManager` as a singleton for storing cash, accessible from any scene.
+   - Adjust `GameManager` and `PlayerScript` in each game to pull and update cash from `GlobalGameManager`.
+   - Ensure that player cash updates consistently, allowing for tracking across multiple game sessions.
+   
+---
+
+## November 1 - November 3, 2024
+
+### 6. UI, Game Flow, and Cash Handling Improvements
+**Description**: Improved the game’s UI, added cash handling logic for wins, losses, and ties, and ensured smooth game flow across rounds.
+**Reason**: Enhanced player experience and accuracy in gameplay.
+**Changes**:
+   - Implemented cash handling after each round:
+      - Wins: Pays double the bet amount.
+      - Losses: Deducts full bet amount.
+      - Tie: Returns the bet amount.
+      - Blackjack: Pays 2.5 times the bet on a win.
+   - Reset pot to zero after each round.
+   - Updated `GameManager` to ensure players can start new rounds with accurate cash values.
+
+### 7. GitHub Repository Setup and Documentation
+**Description**: Finalized version control setup and documented changes.
+**Reason**: Ensured organized version tracking and provided a comprehensive history of development.
+**Changes**:
+   - Created and updated `.gitignore`.
+   - Uploaded project to GitHub repository.
+   - Documented all changes in this `ChangeLog.txt`.
+
+---
+
+### Summary
+This `ChangeLog.txt` serves as a record of all updates, from initial game setup to advanced features, debugging, and final adjustments. Each change has been implemented to improve gameplay experience, ensure accuracy, and maintain a consistent user experience across scenes. Regular updates and tracking have enabled efficient development and version control.
